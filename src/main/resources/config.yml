@@ -1,0 +1,21 @@
+alghoritm: 10/1*140-2
+
+dt:
+  x: -1700
+  y: 65
+  z: 1650
+
+rare: 1.15
+epic: 1.25
+legendary: 1.42
+artifact: 1.65
+
+defChance: 0.9
+chancePerLevel: 0.1
+
+defDispersion: 0.7
+
+itemBase:
+  podrecznikKowala: "podrecznikKowala"
+  kamienPerfekcji: "kamienPerfekcji"
+  rynsztunekKowala: "rynsztunekKowala"

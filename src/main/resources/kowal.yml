@@ -1,0 +1,37 @@
+default: #Defaultowe ustawienia
+  45l: #level przedmiotu
+
+    maxValueArmor: 200
+    maxValueWeapon: 800
+    maxValueJewel: 80
+    dispersion: 0.5
+
+
+
+    0+:
+      chance: 0.2 #optional
+      items: #Kasa zawsze pierwsza
+        - 5%uncjaSrebra
+        - 6%chuj
+    1+:
+    2+:
+    3+:
+
+
+exception: #Wyjatki
+  nazwa_itemku: #nazwa Itemu-wyjątku (Miecz_Z_Szafirowej_Stali)
+    maxValueArmor: 200
+    maxValueWeapon: 800
+    maxValueJewel: 80
+
+    dispersion: 0.5
+
+
+    0+:
+      chance: 0.2
+      items:
+        - 5%uncjaSrebra
+        - 6%chuj
+    1+:
+    2+:
+    3+:
