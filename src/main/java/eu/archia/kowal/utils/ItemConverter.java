@@ -59,7 +59,6 @@ public class ItemConverter {
                 name = split[0].replace(ChatColor.translateAlternateColorCodes('&', "&a&l"), "");
                 rawName = name.replaceAll(Utils.colored("&f"), "").replaceAll(Utils.colored("&6"), "").replaceAll(Utils.colored("&l"), "").replaceAll(" ", "_");
                 rawName = rawName.replace(rawName.substring(rawName.length() - 1), "");
-                upgrade = Integer.parseInt(namee.split(ChatColor.translateAlternateColorCodes('&', "+"))[1]);
                 if (kowal.contains("exception." + rawName)) {
                     isException = true;
                 }
