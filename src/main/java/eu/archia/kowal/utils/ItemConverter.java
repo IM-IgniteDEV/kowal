@@ -88,20 +88,20 @@ public class ItemConverter {
                     this.maxValue = section.getInt("maxValueJewel");
                 }
                 // obliczanie szansy z kowal.yml (dla wartosci opcjonalnej) lub config.yml (dla warosci defaultowej)
-                if (section.contains(upgrade + "\\+.chance")) {
-                    this.chance = section.getDouble(upgrade + "\\+.chance");
+                if (section.contains(upgrade + "p.chance")) {
+                    this.chance = section.getDouble(upgrade + "p.chance");
                 } else {
                     double ch = Kowal.getInst().getConfig().getDouble("defChance");
                     this.chance = ch - (upgrade * Kowal.getInst().getConfig().getDouble("chancePerLevel"));
                 }
-                if (section.contains(upgrade + "\\+.dispersion")) {
-                    this.dispersion = section.getDouble(upgrade + "\\+.dispersion");
+                if (section.contains("dispersion")) {
+                    this.dispersion = section.getDouble("dispersion");
                 } else {
                     this.dispersion = Kowal.getInst().getConfig().getDouble("defDispersion");
                 }
 
                 // pobieranie itemow potrzebnych do ulepszenia jak i ich ilosci z kowal.yml
-                section.getStringList(upgrade + "\\+.items").forEach(line -> {
+                section.getStringList(upgrade + "p.items").forEach(line -> {
                     String[] split2 = line.split("%");
                     ItemStack iss = File.getItemBase().getItemStack(split2[1]);
                     iss.setAmount(Integer.parseInt(split2[0]));
@@ -200,8 +200,12 @@ public class ItemConverter {
     }
 
     public ItemStack build() {
+        if(defaultItemStack == null){
+            return null;
+        }
         ItemMeta meta = defaultItemStack.getItemMeta();
-        meta.setDisplayName(Utils.colored(name + "&a&l\\+" + upgrade));
+        //                                          tu byla ucieczka &a&l\\+'
+        meta.setDisplayName(Utils.colored(name + "&a&l+" + upgrade));
         List<String> lore = meta.getLore();
 
         lore = lore.stream().map(this::buildLine).collect(Collectors.toList());
