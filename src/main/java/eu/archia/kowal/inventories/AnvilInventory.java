@@ -25,6 +25,7 @@ public class AnvilInventory {
             items.add(Utils.colored("&6- "+is.getItemMeta().getDisplayName()+" &2x"+is.getAmount()));
         });
 
+
         ItemStack kowal = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("podrecznikKowala"));
         ItemStack kamien = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("kamienPerfekcji"));
         ItemStack rynsztunek = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("rynsztunekKowala"));
