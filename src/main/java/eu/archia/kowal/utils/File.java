@@ -23,7 +23,7 @@ public class File {
             inst.saveResource("kowal.yml", true);
         }
         java.io.File db = new java.io.File(Kowal.getInst().getConfig().getString("itemBaseLocation"), "ItemBase.yml");
-        if (db.exists()) {
+        if (!db.exists()) {
             try {
                 db.createNewFile();
             } catch (IOException ex) {
