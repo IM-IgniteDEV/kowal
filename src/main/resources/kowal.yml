@@ -8,15 +8,44 @@ default: #Defaultowe ustawienia
 
 
 
-    0+:
+    0p:
       chance: 0.2 #optional
       items: #Kasa zawsze pierwsza
         - 5%uncjaSrebra
-        - 6%chuj
-    1+:
-    2+:
-    3+:
-
+        - 6%plotno
+    1p:
+      chance: 0.2 #optional
+      items:
+        - 2%plotno
+    2p:
+      chance: 0.2 #optional
+      items:
+        - 3%plotno
+    3p:
+      chance: 0.2 #optional
+      items:
+        - 4%plotno
+    4p:
+      chance: 0.2 #optional
+      items:
+        - 5%plotno
+    5p:
+      chance: 0.2 #optional
+      items:
+        - 6%plotno
+    6p:
+      chance: 0.2 #optional
+      items:
+        - 7%plotno
+    7p:
+      chance: 0.2 #optional
+      items:
+        - 8%plotno
+    8p:
+      chance: 0.2 #optional
+      items:
+        - 5%uncjaSrebra
+        - 6%plotno
 
 exception: #Wyjatki
   nazwa_itemku: #nazwa Itemu-wyjątku (Miecz_Z_Szafirowej_Stali)
@@ -27,11 +56,11 @@ exception: #Wyjatki
     dispersion: 0.5
 
 
-    0+:
+    0p:
       chance: 0.2
       items:
         - 5%uncjaSrebra
         - 6%chuj
-    1+:
-    2+:
-    3+:
+    1p:
+    2p:
+    3p:

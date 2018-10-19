@@ -11,7 +11,7 @@ public class File {
     private static YamlConfiguration dezantyn;
     private static YamlConfiguration idb;
 
-    static void checkFiles() {
+    public static void checkFiles() {
         if (!inst.getDataFolder().exists()) {
             inst.getDataFolder().mkdir();
         }

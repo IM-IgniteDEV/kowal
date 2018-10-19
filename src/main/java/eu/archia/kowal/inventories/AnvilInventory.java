@@ -25,12 +25,15 @@ public class AnvilInventory {
             items.add(Utils.colored("&6- "+is.getItemMeta().getDisplayName()+" &2x"+is.getAmount()));
         });
 
+
         ItemStack kowal = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("podrecznikKowala"));
         ItemStack kamien = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("kamienPerfekcji"));
         ItemStack rynsztunek = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("rynsztunekKowala"));
 
+        ItemStack charcoal = new ItemStack(Material.COAL);
+        charcoal.getData().setData((byte) 1);
 
-        SimpleGUI gui = new SimpleGUI(new GUI("&4&l$$ &6Ulepsz Przedmiot &5&l$$", Rows.ONE));
+        SimpleGUI gui = new SimpleGUI(new GUI("&4&l$$ &6Ulepsz Przedmiot &5&l$$", Rows.TWO));
         gui.getGuiSettings().setCanDrag(false);
         gui.getGuiSettings().setCanEnterItems(false);
 
@@ -38,19 +41,28 @@ public class AnvilInventory {
         List<String> lore = meta.getLore();
         lore.add(" ");
         lore.add(Utils.colored("&6Przedmiot ktory ulepszasz"));
-
-        gui.setItem(1, new ItemBuilder(Material.BIRCH_DOOR).setName("&6Ulepsz Przedmiot").setLore(items));
+//item 1
+        gui.setItem(10, new ItemBuilder(Material.ANVIL).setName("&6Ulepsz Przedmiot.").setLore(items));
+//item 2
         if (p.getInventory().containsAtLeast(kowal, 1)){
-            gui.setItem(2, new ItemBuilder(Material.BIRCH_DOOR).setName("&6Ulepsz Przedmiot za pomoca Podrecznika Kowala").setLore(items));
+            gui.setItem(12, new ItemBuilder(Material.BOOK).setName("&6Ulepsz Przedmiot z Podrecznikiem Kowala").setLore(items));
         }
         else{
-            gui.setItem(2, new ItemBuilder(Material.BIRCH_DOOR).setName("&6Ulepsz Przedmiot za pomoca Podrecznika Kowala").setLore(" " , "&cNie posiadasz Podrecznika Kowala!" , "&7"));
+            gui.setItem(12, new ItemBuilder(Material.BOOK).setName("&6Ulepsz Przedmiot za pomoca Podrecznika Kowala").setLore(" " , "&cNie posiadasz Podrecznika Kowala!" , "&7"));
         }
 
+// item 3
+        if (p.getInventory().containsAtLeast(kamien, 1)){
+            gui.setItem(14, new ItemBuilder(charcoal).setName("&6Ulepsz Przedmiot za pomoca Kamienia Perfekcji").setLore(items));
+        }
+        else {
+            gui.setItem(14, new ItemBuilder(charcoal).setName("&6Ulepsz Przedmiot za pomoca Kamienia Perfekcji").setLore(" " , "&cNie posiadasz Kamienia Perfekcji!"));
+        }
+// item 4
         gui.setItem(4, new ItemBuilder(p.getInventory().getItemInMainHand()).setLore(lore));
+// item 5
+        gui.setItem(16, new ItemBuilder(Material.BOOK).setName("").setLore(""));
 
-        gui.setItem(6, new ItemBuilder(Material.BIRCH_DOOR).setName("").setLore(items));
-        gui.setItem(7, new ItemBuilder(Material.BIRCH_DOOR).setName("").setLore(""));
-
+        gui.openInventory(p);
     }
 }
