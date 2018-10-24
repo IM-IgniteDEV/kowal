@@ -26,9 +26,9 @@ public class AnvilInventory {
         });
 
 
-        ItemStack kowal = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("podrecznikKowala"));
-        ItemStack kamien = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("kamienPerfekcji"));
-        ItemStack rynsztunek = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("rynsztunekKowala"));
+        ItemStack kowal = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.podrecznikKowala"));
+        ItemStack kamien = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.kamienPerfekcji"));
+        ItemStack rynsztunek = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.rynsztunekKowala"));
 
         ItemStack charcoal = new ItemStack(Material.COAL);
         charcoal.getData().setData((byte) 1);
@@ -37,10 +37,13 @@ public class AnvilInventory {
         gui.getGuiSettings().setCanDrag(false);
         gui.getGuiSettings().setCanEnterItems(false);
 
-        ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
+        ItemStack copy = p.getInventory().getItemInMainHand().clone();
+        ItemMeta meta = copy.getItemMeta();
         List<String> lore = meta.getLore();
         lore.add(" ");
         lore.add(Utils.colored("&6Przedmiot ktory ulepszasz"));
+        copy.getItemMeta().setLore(lore);
+
 //item 1
         gui.setItem(10, new ItemBuilder(Material.ANVIL).setName("&6Ulepsz Przedmiot.").setLore(items));
 //item 2
@@ -59,7 +62,7 @@ public class AnvilInventory {
             gui.setItem(14, new ItemBuilder(charcoal).setName("&6Ulepsz Przedmiot za pomoca Kamienia Perfekcji").setLore(" " , "&cNie posiadasz Kamienia Perfekcji!"));
         }
 // item 4
-        gui.setItem(4, new ItemBuilder(p.getInventory().getItemInMainHand()).setLore(lore));
+        gui.setItem(4, new ItemBuilder(copy));
 // item 5
         gui.setItem(16, new ItemBuilder(Material.BOOK).setName("").setLore(""));
 

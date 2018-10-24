@@ -15,8 +15,8 @@ chancePerLevel: 0.1
 
 defDispersion: 0.7
 
-itemBaseLocation: "/home/Archia/plugins/ItemBase"
+itemBaseLocation: /home/Archia/plugins/ItemBase
 itemBase:
-  podrecznikKowala: "podrecznikKowala"
-  kamienPerfekcji: "kamienPerfekcji"
-  rynsztunekKowala: "rynsztunekKowala"
+  podrecznikKowala: podrecznikKowala
+  kamienPerfekcji: kamienPerfekcji
+  rynsztunekKowala: rynsztunekKowala

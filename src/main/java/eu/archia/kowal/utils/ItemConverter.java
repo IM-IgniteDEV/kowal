@@ -91,6 +91,10 @@ public class ItemConverter {
                     this.chance = section.getDouble(upgrade + "p.chance");
                 } else {
                     double ch = Kowal.getInst().getConfig().getDouble("defChance");
+                   // double up = chance;
+                   // if (upgrade == 0) {
+                   //     up = 1;
+                  // }
                     this.chance = ch - (upgrade * Kowal.getInst().getConfig().getDouble("chancePerLevel"));
                 }
                 if (section.contains("dispersion")) {

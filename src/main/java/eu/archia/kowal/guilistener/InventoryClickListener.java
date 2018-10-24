@@ -23,17 +23,16 @@ public class InventoryClickListener implements Listener {
                         ItemStack handItem = p.getInventory().getItemInMainHand();
                         if (handItem.hasItemMeta()) {
                             if (handItem.getItemMeta().hasDisplayName() && handItem.getItemMeta().getDisplayName().contains(Utils.colored("&a&l+"))) {
-
-                                if (e.getCurrentItem().getItemMeta().getDisplayName().toLowerCase().contains("Ulepsz Przedmiot.")) {
+                                if (e.getCurrentItem().getItemMeta().getDisplayName().toLowerCase().contains("ulepsz przedmiot.")) {
                                     this.upgrade(p, 0);
                                 }
-                                if (e.getCurrentItem().getItemMeta().getDisplayName().toLowerCase().contains("Ulepsz Przedmiot z Podrecznikiem Kowala")) {
-                                    if (p.getInventory().containsAtLeast(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("podrecznikKowala")), 1)){
+                                if (e.getCurrentItem().getItemMeta().getDisplayName().toLowerCase().contains("ulepsz przedmiot z podrecznikiem kowala")) {
+                                    if (p.getInventory().containsAtLeast(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.podrecznikKowala")), 1)){
                                         this.upgrade(p, 1);
                                     }
                                 }
-                                if (e.getCurrentItem().getItemMeta().getDisplayName().toLowerCase().contains("Ulepsz Przedmiot za pomoca Kamienia Perfekcji")) {
-                                    if (p.getInventory().containsAtLeast(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("podrecznikKowala")), 1)) {
+                                if (e.getCurrentItem().getItemMeta().getDisplayName().toLowerCase().contains("ulepsz przedmiot za pomoca kamienia perfekcji")) {
+                                    if (p.getInventory().containsAtLeast(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.kamienPerfekcji")), 1)) {
                                         this.upgrade(p, 2);
                                     }
                                 }
@@ -63,11 +62,12 @@ public class InventoryClickListener implements Listener {
         p.getInventory().removeItem(item.getItems().toArray(new ItemStack[0]));
 
         if (type == 1) {
-            p.getInventory().removeItem(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("podrecznikKowala")));
+            p.getInventory().removeItem(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.podrecznikKowala")));
         } else if (type == 2) {
-            p.getInventory().removeItem(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("kamienPerfekcji")));
+            p.getInventory().removeItem(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.kamienPerfekcji")));
         }
 
+        p.sendMessage(Utils.colored("&7[&e&l!&7] Szansa na pomyslne ulepszenie:"+item.getChance()));
         if (Math.random() < item.getChance()) {
             item.setUpgrade(item.getUpgrade() + 1);
             p.getInventory().setItemInMainHand(item.build());
