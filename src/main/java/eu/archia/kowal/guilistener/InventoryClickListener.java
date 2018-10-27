@@ -1,9 +1,11 @@
 package eu.archia.kowal.guilistener;
 
 import eu.archia.kowal.Kowal;
+import eu.archia.kowal.enums.RpgQuality;
 import eu.archia.kowal.utils.File;
 import eu.archia.kowal.utils.ItemConverter;
 import eu.archia.kowal.utils.Utils;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +29,7 @@ public class InventoryClickListener implements Listener {
                                     this.upgrade(p, 0);
                                 }
                                 if (e.getCurrentItem().getItemMeta().getDisplayName().toLowerCase().contains("ulepsz przedmiot z podrecznikiem kowala")) {
-                                    if (p.getInventory().containsAtLeast(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.podrecznikKowala")), 1)){
+                                    if (p.getInventory().containsAtLeast(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.podrecznikKowala")), 1)) {
                                         this.upgrade(p, 1);
                                     }
                                 }
@@ -35,6 +37,10 @@ public class InventoryClickListener implements Listener {
                                     if (p.getInventory().containsAtLeast(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.kamienPerfekcji")), 1)) {
                                         this.upgrade(p, 2);
                                     }
+                                }
+                                if (e.getCurrentItem().getItemMeta().getDisplayName().toLowerCase().contains("zwieksz jakosc przedmiotu")) {
+                                    this.upgrade(p, 3);
+
                                 }
                             }
                         }
@@ -48,8 +54,58 @@ public class InventoryClickListener implements Listener {
     public void upgrade(Player p, int type) {
         ItemConverter item = new ItemConverter(p.getInventory().getItemInMainHand());
 
-        if (item.getUpgrade() >= 9) {
-            p.sendMessage(Utils.colored("&7[&c&l!&7] Ten przedmiot jest ulepszony maksymalnie!"));
+        if (type < 3) {
+            if (item.getUpgrade() >= 9) {
+                p.sendMessage(Utils.colored("&7[&c&l!&7] Ten przedmiot jest ulepszony maksymalnie!"));
+                return;
+            }
+        }
+        if (type == 3) {
+            ItemStack rynsz = File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.rynsztunekKowala"));
+            if (!item.getQuality().equals(RpgQuality.LEGENDARNY)) {
+                RpgQuality qual = item.getQuality();
+                if (p.getInventory().containsAtLeast(rynsz, 5)) {
+                    if (qual.equals(RpgQuality.NORMALNY)) {
+                        item.setQuality(RpgQuality.RZADKI);
+                        rynsz.setAmount(5);
+                        p.getInventory().removeItem(rynsz);
+                        p.sendMessage(Utils.colored("&7[&a&l!&7] Ulepszono jakosc przedmiotu!"));
+                        p.getInventory().setItemInMainHand(item.build());
+                        return;
+                    }
+                    if (qual.equals(RpgQuality.RZADKI)) {
+                        item.setQuality(RpgQuality.EPICKI);
+                        rynsz.setAmount(5);
+                        p.getInventory().removeItem(rynsz);
+                        p.sendMessage(Utils.colored("&7[&a&l!&7] Ulepszono jakosc przedmiotu!"));
+                        p.getInventory().setItemInMainHand(item.build());
+                        return;
+                    }
+                    if (qual.equals(RpgQuality.EPICKI)) {
+                        item.setQuality(RpgQuality.LEGENDARNY);
+                        rynsz.setAmount(5);
+                        p.getInventory().removeItem(rynsz);
+                        p.sendMessage(Utils.colored("&7[&a&l!&7] Ulepszono jakosc przedmiotu!"));
+                        p.getInventory().setItemInMainHand(item.build());
+                        return;
+                    }
+                }
+                else {p.sendMessage(Utils.colored("&7[&c&l!&7] Nie masz tylu Rynsztunkow Kowala by ulepszyc jakosc."));}
+            } else {
+                if (item.getQuality().equals(RpgQuality.LEGENDARNY)) {
+                    if (p.getInventory().containsAtLeast(rynsz, 10)) {
+                        if (item.getUpgrade() == 9) {
+                            item.setUpgrade(0);
+                            rynsz.setAmount(10);
+                            p.getInventory().removeItem(rynsz);
+                            item.setQuality(RpgQuality.ARTEFAKT);
+                            p.getInventory().setItemInMainHand(item.build());
+                            return;
+                        }
+                    }
+                }
+                else {p.sendMessage(Utils.colored("&7[&c&l!&7] Nie masz tylu Rynsztunkow Kowala by ulepszyc jakosc."));}
+            }
             return;
         }
 
@@ -67,7 +123,8 @@ public class InventoryClickListener implements Listener {
             p.getInventory().removeItem(File.getItemBase().getItemStack(Kowal.getInst().getConfig().getString("itemBase.kamienPerfekcji")));
         }
 
-        p.sendMessage(Utils.colored("&7[&e&l!&7] Szansa na pomyslne ulepszenie:"+item.getChance()));
+        p.sendMessage(Utils.colored("&7[&e&l!&7] Szansa na pomyslne ulepszenie:" + item.getChance()));
+        p.sendMessage("Value:" + item.getMaxValue() + " Typ itemu: " + item.getType() + " Jakosc: " + item.getQuality());
         if (Math.random() < item.getChance()) {
             item.setUpgrade(item.getUpgrade() + 1);
             p.getInventory().setItemInMainHand(item.build());

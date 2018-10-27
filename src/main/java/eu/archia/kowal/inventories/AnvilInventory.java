@@ -1,6 +1,7 @@
 package eu.archia.kowal.inventories;
 
 import eu.archia.kowal.Kowal;
+import eu.archia.kowal.enums.RpgQuality;
 import eu.archia.kowal.utils.File;
 import eu.archia.kowal.utils.ItemConverter;
 import eu.archia.kowal.utils.Utils;
@@ -22,7 +23,7 @@ public class AnvilInventory {
         List<String> items = new ArrayList<>();
         items.add(Utils.colored("&aPotrzebujesz do ulepszenia:"));
         conv.getItems().forEach(is -> {
-            items.add(Utils.colored("&6- "+is.getItemMeta().getDisplayName()+" &2x"+is.getAmount()));
+            items.add(Utils.colored("&6- " + is.getItemMeta().getDisplayName() + " &2x" + is.getAmount()));
         });
 
 
@@ -47,25 +48,42 @@ public class AnvilInventory {
 //item 1
         gui.setItem(10, new ItemBuilder(Material.ANVIL).setName("&6Ulepsz Przedmiot.").setLore(items));
 //item 2
-        if (p.getInventory().containsAtLeast(kowal, 1)){
+        if (p.getInventory().containsAtLeast(kowal, 1)) {
             gui.setItem(12, new ItemBuilder(Material.BOOK).setName("&6Ulepsz Przedmiot z Podrecznikiem Kowala").setLore(items));
-        }
-        else{
-            gui.setItem(12, new ItemBuilder(Material.BOOK).setName("&6Ulepsz Przedmiot za pomoca Podrecznika Kowala").setLore(" " , "&cNie posiadasz Podrecznika Kowala!" , "&7"));
+        } else {
+            gui.setItem(12, new ItemBuilder(Material.BOOK).setName("&6Ulepsz Przedmiot za pomoca Podrecznika Kowala").setLore(" ", "&cNie posiadasz Podrecznika Kowala!", "&7"));
         }
 
 // item 3
-        if (p.getInventory().containsAtLeast(kamien, 1)){
+        if (p.getInventory().containsAtLeast(kamien, 1)) {
             gui.setItem(14, new ItemBuilder(charcoal).setName("&6Ulepsz Przedmiot za pomoca Kamienia Perfekcji").setLore(items));
-        }
-        else {
-            gui.setItem(14, new ItemBuilder(charcoal).setName("&6Ulepsz Przedmiot za pomoca Kamienia Perfekcji").setLore(" " , "&cNie posiadasz Kamienia Perfekcji!"));
+        } else {
+            gui.setItem(14, new ItemBuilder(charcoal).setName("&6Ulepsz Przedmiot za pomoca Kamienia Perfekcji").setLore(" ", "&cNie posiadasz Kamienia Perfekcji!"));
         }
 // item 4
         gui.setItem(4, new ItemBuilder(copy));
 // item 5
-        gui.setItem(16, new ItemBuilder(Material.BOOK).setName("").setLore(""));
-
+        if (!conv.getQuality().equals(RpgQuality.LEGENDARNY) && !conv.getQuality().equals(RpgQuality.ARTEFAKT)) {
+            if (p.getInventory().containsAtLeast(rynsztunek, 5)) {
+                gui.setItem(16, new ItemBuilder(Material.BOOK).setName("&6Zwieksz jakosc przedmiotu za pomoca Rynsztunku Kowala").setLore("&7By zwiekszyc jakosc musisz posiadac ", "&25x &7Rynsztunek Kowala!"));
+            }
+            else{
+                gui.setItem(16, new ItemBuilder(Material.BOOK).setName("&6Zwieksz jakosc przedmiotu za pomoca Rynsztunku Kowala").setLore("&7Musisz posiadac conajmniej", "&25x &7Rynsztunek Kowala!","&7by moc zwiekszyc jakosc tego przedmiotu"));
+            }
+        } else {
+            if (conv.getQuality().equals(RpgQuality.LEGENDARNY)) {
+                if (p.getInventory().containsAtLeast(rynsztunek, 5)) {
+                    gui.setItem(16, new ItemBuilder(Material.BOOK).setName("&6Zwieksz jakosc przedmiotu za pomoca Rynsztunku Kowala").setLore("&7By zwiekszyc jakosc musisz posiadac ", "&210x &7Rynsztunek Kowala!"));
+                }
+                else{
+                    gui.setItem(16, new ItemBuilder(Material.BOOK).setName("&6Zwieksz jakosc przedmiotu za pomoca Rynsztunku Kowala").setLore("&7Musisz posiadac conajmniej", "&25x &7Rynsztunek Kowala!","&7by moc zwiekszyc jakosc tego przedmiotu"));
+                }
+            } else {
+                if (conv.getQuality().equals(RpgQuality.ARTEFAKT)) {
+                    gui.setItem(16, new ItemBuilder(Material.BOOK).setName("&6Zwieksz jakosc przedmiotu za pomoca Rynsztunku Kowala.").setLore("&cTen Przedmiot Jest juz Artefaktem!", " nie da sie juz zwiekszyc jakosc przedmiotu!"));
+                }
+            }
+        }
         gui.openInventory(p);
     }
 }

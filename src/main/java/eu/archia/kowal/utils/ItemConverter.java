@@ -91,10 +91,10 @@ public class ItemConverter {
                     this.chance = section.getDouble(upgrade + "p.chance");
                 } else {
                     double ch = Kowal.getInst().getConfig().getDouble("defChance");
-                   // double up = chance;
-                   // if (upgrade == 0) {
-                   //     up = 1;
-                  // }
+                    // double up = chance;
+                    // if (upgrade == 0) {
+                    //     up = 1;
+                    // }
                     this.chance = ch - (upgrade * Kowal.getInst().getConfig().getDouble("chancePerLevel"));
                 }
                 if (section.contains("dispersion")) {
@@ -107,7 +107,22 @@ public class ItemConverter {
                 section.getStringList(upgrade + "p.items").forEach(line -> {
                     String[] split2 = line.split("%");
                     ItemStack iss = File.getItemBase().getItemStack(split2[1]);
-                    iss.setAmount(Integer.parseInt(split2[0]));
+                    if (type.equals(ItemType.ARMOR)) {
+                        iss.setAmount(Integer.parseInt(split2[0]));
+                    } else if (type.equals(ItemType.WEAPON)) {
+                        double in = Double.parseDouble(split2[0]);
+                        in = in * 1.5;
+                        in = Math.ceil(in);
+                        int inn = (int) in;
+                        iss.setAmount(inn);
+                    } else if (type.equals(ItemType.JEWEL)) {
+                        int in = Integer.parseInt(split2[0]);
+                        in = in / 2;
+                        if (in > 1) {
+                            in = 1;
+                        }
+                        iss.setAmount(in);
+                    }
                     items.add(iss);
                 });
             }
@@ -203,7 +218,7 @@ public class ItemConverter {
     }
 
     public ItemStack build() {
-        if(defaultItemStack == null){
+        if (defaultItemStack == null) {
             return null;
         }
         ItemMeta meta = defaultItemStack.getItemMeta();
@@ -219,9 +234,11 @@ public class ItemConverter {
     }
 
     private String buildLine(String s) {
-        int value = (int) Math.round(maxValue / 9 * upgrade * quality.getMultiplier());
+        double va = maxValue / 10 * (upgrade + 1) * quality.getMultiplier();
+        int value = (int) Math.ceil(va);
         if (s.contains("Atak: +")) {
-            s = Utils.colored("&7Atak: +" + (value * dispersion) + "-" + value);
+            int v = (int) Math.ceil(value * dispersion);
+            s = Utils.colored("&7Atak: +" + v + "-" + value);
         } else if (s.contains("Obrona: ")) {
             s = Utils.colored("&7Obrona: +" + value);
         } else if (s.contains("Klasa: ")) {
@@ -235,9 +252,8 @@ public class ItemConverter {
                 s = Utils.colored("&7Klasa: Paladyn");
             }
         } else if (s.contains("Od Poziomu:")) {
-            s = Utils.colored("&7Od Poziomu: "+level);
-        }
-        else if (s.contains("Jakosc:")) {
+            s = Utils.colored("&7Od Poziomu: " + level);
+        } else if (s.contains("Jakosc:")) {
             if (quality.equals(RpgQuality.LOSOWANIE)) {
                 s = Utils.colored("&7Jakosc: Losowanie");
             } else if (quality.equals(RpgQuality.NORMALNY)) {
@@ -246,9 +262,9 @@ public class ItemConverter {
                 s = Utils.colored("&7Jakosc: Rzadki");
             } else if (quality.equals(RpgQuality.EPICKI)) {
                 s = Utils.colored("&7Jakosc: Epicki");
-            }else if (quality.equals(RpgQuality.LEGENDARNY)) {
+            } else if (quality.equals(RpgQuality.LEGENDARNY)) {
                 s = Utils.colored("&7Jakosc: Legendarny");
-            }else if (quality.equals(RpgQuality.ARTEFAKT)) {
+            } else if (quality.equals(RpgQuality.ARTEFAKT)) {
                 s = Utils.colored("&7Jakosc: Artefakt");
             }
         }

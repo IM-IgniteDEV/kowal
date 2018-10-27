@@ -20,3 +20,11 @@ itemBase:
   podrecznikKowala: podrecznikKowala
   kamienPerfekcji: kamienPerfekcji
   rynsztunekKowala: rynsztunekKowala
+
+chanceRare: 0.3
+chanceEpic: 0.2
+chanceLegendary: 0.05
+chanceArtifact: 0.001
+chancePlus1: 0.5
+chancePlus2: 0.2
+chancePlus3: 0.1

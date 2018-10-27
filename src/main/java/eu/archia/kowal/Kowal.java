@@ -2,6 +2,7 @@ package eu.archia.kowal;
 
 import eu.archia.kowal.guilistener.AnvilClickListener;
 import eu.archia.kowal.guilistener.InventoryClickListener;
+import eu.archia.kowal.pickuplistener.PickUp;
 import eu.archia.kowal.utils.File;
 import eu.archia.kowal.utils.Utils;
 import org.bukkit.Bukkit;
@@ -19,6 +20,7 @@ public final class Kowal extends JavaPlugin {
         File.checkFiles();
         getServer().getPluginManager().registerEvents(new AnvilClickListener() , this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener() , this);
+        getServer().getPluginManager().registerEvents(new PickUp(), this);
         Bukkit.getConsoleSender().sendMessage(Utils.colored("&6Uruchamianie: &eKowal"));
 
     }

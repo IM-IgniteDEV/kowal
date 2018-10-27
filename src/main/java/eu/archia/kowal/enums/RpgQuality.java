@@ -3,7 +3,7 @@ package eu.archia.kowal.enums;
 import eu.archia.kowal.Kowal;
 
 public enum RpgQuality {
-    LOSOWANIE(0d),
+    LOSOWANIE(1d),
     NORMALNY(1d),
     RZADKI(Kowal.getInst().getConfig().getDouble("rare")),
     EPICKI(Kowal.getInst().getConfig().getDouble("epic")),
