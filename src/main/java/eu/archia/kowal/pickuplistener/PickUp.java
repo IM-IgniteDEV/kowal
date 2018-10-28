@@ -5,14 +5,18 @@ import eu.archia.kowal.enums.RpgQuality;
 import eu.archia.kowal.utils.ItemConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class PickUp implements Listener {
 
-    @EventHandler
-    public void onPickUp(InventoryPickupItemEvent e) {
+
+
+    @EventHandler(priority=EventPriority.HIGHEST)
+    public void onPickUp(EntityPickupItemEvent e) {
         Bukkit.getConsoleSender().sendMessage("odpala event");
         ItemStack i = e.getItem().getItemStack();
         if (i.hasItemMeta()) {
